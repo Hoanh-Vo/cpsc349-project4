@@ -8,6 +8,7 @@ import * as init from './scripts/init.js'
 import * as addremove from './scripts/addremove.js'
 import * as login from './scripts/login.js'
 import * as register from './scripts/register.js'
+import * as postTweet from './scripts/postTweet.js'
 import * as timeline from './scripts/timeline.js'
 import * as mockroblog from './scripts/mockroblog.js'
 window.init = init
@@ -15,6 +16,7 @@ window.addremove = addremove
 window.login = login
 window.register = register
 window.timeline = timeline
+window.postTweet = postTweet
 window.mockroblog = mockroblog
 
 const searchForm = document.querySelector('#search')
