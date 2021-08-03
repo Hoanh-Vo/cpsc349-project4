@@ -1,7 +1,20 @@
 import './tailwind.css'
 import './magnifying-glass.png'
 
-import * as mockroblog from './mockroblog.js'
+import './images/button.png'
+import './images/twitter.png'
+
+import * as init from './scripts/init.js'
+import * as addremove from './scripts/addremove.js'
+import * as login from './scripts/login.js'
+import * as register from './scripts/register.js'
+import * as timeline from './scripts/timeline.js'
+import * as mockroblog from './scripts/mockroblog.js'
+window.init = init
+window.addremove = addremove
+window.login = login
+window.register = register
+window.timeline = timeline
 window.mockroblog = mockroblog
 
 const searchForm = document.querySelector('#search')
