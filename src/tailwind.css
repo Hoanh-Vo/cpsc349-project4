@@ -2,19 +2,109 @@
 @tailwind components;
 @tailwind utilities;
 
+/*  style for h1 */
+@layer base{
+    h1{
+        color: red;
+        font-family: serif;
+        font-size: 4rem;         
+
+    }
+    h3{        
+        font-family: san-serif;
+        font-size: 2rem;         
+
+    }
+    p{        
+        color: green      
+
+    }
+    li{        
+        color: green       
+
+    }
+    a{
+        color: blue 
+    }
+}
+
 /* Custom Tailwind classes go here */
 @layer components {
 
-    h1 {
-        @apply text-2xl py-4
+  
+    .header_footer {
+        @apply text-blue-900  font-bold text-3xl 
     }
 
-    h2 {
-        @apply text-xl py-2
+    .animate_h1{
+        @apply text-center py-10 animate-pulse h-16 w-full
+    }
+    .main_tag{
+        @apply text-center border-2
     }
 
-    footer {
-        @apply bg-gray-200
+    .navbar{
+        @apply grid grid-cols-2 bg-gray-900 overflow-hidden pl-10 mt-12
     }
+    .nav_link{
+        @apply text-white hover:bg-yellow-900 
+    }
+    .grid_layout {
+        @apply grid grid-cols-3 gap-4
+    } 
+    .grid_layout2 {
+        @apply grid grid-cols-2 gap-4
+    } 
+    .hoover_li {
+        @apply hover:text-purple-900 pt-4
+    }
+
+    .hooverPurple{
+        @apply hover:text-purple-900
+    }
+    .hooverBlue{
+        @apply hover:underline hover:text-blue-900 text-blue-500
+    }
+   
+   
+    .photo_links {
+        @apply text-green-900  font-bold hover:text-red-800 
+    }   
+   .bluebold{
+      @apply bg-blue-500 font-bold 
+   }
+   
+    .pagination_bar {
+        @apply text-green-800  text-center  font-bold
+    }
+  
+    .a_highligh {
+        @apply focus:outline-none text-lg hover:bg-gray-400 rounded
+    }
+  
+    .divD{
+        @apply flex justify-between items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition
+    }
+    .div_timeline{
+        @apply flex flex-col ml-2
+    }
+    .a_timeline{
+        @apply font-medium text-green-900 font-bold  hover:text-blue-900
+
+    }   
+    .span_timeline2{
+        @apply text-sm text-gray-700 overflow-ellipsis 
+    }
+    
+
+    .form_input{
+        @apply w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out
+    }
+    .form_input_pass{
+        @apply text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg
+    }
+
+
+    
 
 }
