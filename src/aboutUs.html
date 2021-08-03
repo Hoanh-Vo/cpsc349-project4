@@ -35,84 +35,32 @@
     
     
        
-                <main class="pl-10">
-                    <h1>About Us</h1>
-                    <p>       
-                        As a team, we implemented a website showcasing pet 
-                        photos. We extracted information about the pet photos 
-                        from the Unsplash dataset (Lite Version) to construct 
-                        our website. The information we extracted consists of 
-                        the metadata and captions of the pet photos. We used 
-                        Static Site Generator to create the HTML for the site 
-                        instead of managing 100 photos by hand. </p>
-                        <br>
-                        <p>Eleventy was used
-                        to turn the data in the directory into a site with one 
-                        webpage for each photo. This meant that each photo had
-                        its own individual page. From each HTML file, the 
-                        front-matter data was used along with Eleventy templates.
-                        The templates were used to create enhanced pages for 
-                        each picture plus credit and additional information for each 
-                        photo. We had to validate our markup and enhance the site-wide 
-                        layout so the site would include the standard page elements. 
-                        We then added an additional feature which allows the user to go
-                        to the previous and next picture. </p> 
-                        <br>
-                        <p>
-                        In order to create the previous, current, and next page, we 
-                        had to get the number part of the url. The number was converted 
-                        into a string number to integer. Then we only rendered the 
-                        pageable tab when the current page was not the first or last 
-                        page. If the number page is greater than zero and less than nine, 
-                        then 00 is added to the previous and next value before converting 
-                        back to a string. If the number page is 9, 00 is added to the previous 
-                        and next value. If the number page is 10, 00 is added to the previous 
-                        and next value. Lastly, if the number page is greater than 10, 0 is 
-                        added to front before converting back to a string. The pageable tab 
-                        is rendered one more time for page 0 and page 99. Page 0 doesn’t have 
-                        a previous and page 99 doesn’t have a next. Therefore, we reload the 
-                        the either page 0 or 99 if the user clicks previous/next.
-                
-                        Lastly, this project could have not been completed 
-                        without the
-                
-                        <a href="https://github.com/unsplash/datasets">Unsplash dataset.</a><br></p>
+    <main class="pl-10">
+        <h1>About Us</h1>
 
-                        <br>
-                        <p>We used tailblocks and </p>
-                        <a href="https://tailwindtemplates.io/search/">Tailwind templates.</a><br></p>
-                        <div>            
-                            <p>
-                                As a group, we created four different websites. We had to create 
-                                three different layouts, and implement only two of those layouts. 
-                                I replicated one of the wireframes using Flexbox. The link to 
-                                the layout can be viewed here: <a class="hooverBlue" href="https://hoanh-vo.github.io/FrexboxWF/"
-                                >Flexbox Layout</a>, 
-                                <a class="hooverBlue" href="https://hoanh-vo.github.io/wireframe/"
-                                >Grid Layout</a>, 
-                                <a class="hooverBlue" href="https://hoanh-vo.github.io/mbWireFrame/"
-                                >Mobile Layout</a>, 
-                                These four websites
-                                were created with Flexbox, Grid, Tailwind Built In, and Tailwind 
-                                custom component classes. You can check out Grid, Tailwind Built In,
-                                and Tailwind Custom Component Classes here. <br>
-                                <a class="hooverBlue" href="https://britney-py.github.io/cpsc349-project2/">Flex</a><br>
-                                <a class="hooverBlue" href="https://caracer1.github.io/cspc349-project2/">Grid</a><br>
-                                <a class="hooverBlue" href="https://andy-lopez.github.io/cspc349-project2/">Tailwind Built In</a><br>
-                                <a class="hooverBlue" href="https://hoanh-vo.github.io/cpsc349-project2/">Tailwind Custom Component Classes</a> </p>
-                        </div>
-                    <br>
-                    <u class="bluebold">Created by:</u>  
-                    <ul>  
-                            
-                        <li>Andy Lopez </li>
-                        <li>Benjamin Jacobs</li> 
-                        <li>Bradley Vo </li>
-                        <li>Britney Fernandez</li> 
+
+            <p>How the site works:</p>
+            <p>We used local storage to save the logged in user. This is referenced again when you click on a user and try to follow them.
+                It checks who you are and whether you are following them.
+            </p>
+            <p>We used query parameters to determine how to filter the user timeline. Click on a user to see their timeline!</p>
+            <p>For our style credit goes to: <a href="https://tailblocks.cc/">Tailblocks.</a> and <a href="https://tailwindtemplates.io/search/">Tailwind templates.</a></p>
+            </p>
+            <p>Wireframes:</p>
+            <img src="./images/addfollow.png">
+            <img src="./images/layoutflow.png">
+        <br>
+        <u class="bluebold">Created by:</u>  
+        <ul>  
                 
-                    </ul>
-                
-                </main>
+            <li>Andy Lopez </li>
+            <li>Benjamin Jacobs</li> 
+            <li>Bradley Vo </li>
+            <li>Britney Fernandez</li> 
+    
+        </ul>
+    
+    </main>
            
                 <footer class="text-gray-600 body-font bg-gray-100">
                     <div

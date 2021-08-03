@@ -121,7 +121,7 @@ if (sPage === 'publishtimeline.html') {
   }
 } else if (sPage === 'hometimeline.html') {
   const loggedInUser = window.localStorage.getItem('user_name')
-  let timeline = mockroblog.getHomeTimeline(loggedInUser)
+  const timeline = mockroblog.getHomeTimeline(loggedInUser)
   let container
   container = document.getElementById('timeline-json')
 
