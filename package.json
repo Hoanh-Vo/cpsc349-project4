@@ -3,7 +3,7 @@
   "description": "CPSC 349 - Summer 2021 - Project 4",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx webpack serve --open",    
+    "start": "npx webpack serve --open",
     "build": "npx webpack"
   },
   "author": "Kenytt Avery",

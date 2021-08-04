@@ -44,7 +44,7 @@ if (sPage === 'usertimeline.html') {
     document.getElementById('follow_unfollow_button').innerHTML = 'FOLLOW'
   }
 
-  follow_unfollow_button.addEventListener('click', (e) => {
+  document.getElementById('follow_unfollow_button').addEventListener('click', (e) => {
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     const currentPageUser = urlParams.get('username')
@@ -78,9 +78,9 @@ if (sPage === 'usertimeline.html') {
 //     // display.textContent = JSON.stringify(timeline, null, 2)
 //  }
 if (sPage === 'publishtimeline.html') {
-  let timeline = mockroblog.getPublicTimeline()
-  let container
-  container = document.getElementById('timeline-json')
+  const timeline = mockroblog.getPublicTimeline()
+  // let container
+  const container = document.getElementById('timeline-json')
 
   for (let i = 0; i < timeline.length; i++) {
     const username = getUserbyID(timeline[i].user_id)
@@ -104,12 +104,12 @@ if (sPage === 'publishtimeline.html') {
     console.log(loggedInUser)
   }
   console.log(loggedInUser)
-  let timeline = mockroblog.getUserTimeline(loggedInUser)
-  let container
-  container = document.getElementById('timeline-json')
+  const timeline = mockroblog.getUserTimeline(loggedInUser)
+  // let container
+  const container = document.getElementById('timeline-json')
 
   for (let i = 0; i < timeline.length; i++) {
-    let username = getUserbyID(timeline[i].user_id)
+    const username = getUserbyID(timeline[i].user_id)
     container.innerHTML += "<li class='divD' >" +
           "<div class=''>" + "<img src='https://i.pravatar.cc/50' width='40' height='40' class='rounded-full'>" +
               "<div class='div_timeline'>" + "<a href='usertimeline.html?username=" + username.username + "'class='a_timeline'>" + username.username + "</a> <span class='span_timeline2'>" +
@@ -122,8 +122,8 @@ if (sPage === 'publishtimeline.html') {
 } else if (sPage === 'hometimeline.html') {
   const loggedInUser = window.localStorage.getItem('user_name')
   const timeline = mockroblog.getHomeTimeline(loggedInUser)
-  let container
-  container = document.getElementById('timeline-json')
+  // let container
+  const container = document.getElementById('timeline-json')
 
   for (let i = 0; i < timeline.length; i++) {
     const username = getUserbyID(timeline[i].user_id)
