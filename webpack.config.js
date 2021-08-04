@@ -8,67 +8,68 @@ module.exports = {
 
   },
   entry: {
-   addremove: path.resolve(__dirname,'src/scripts/addremove.js'),
-login: path.resolve(__dirname,'src/scripts/login.js'),
-register: path.resolve(__dirname,'src/scripts/register.js'),
-postTweet: path.resolve(__dirname,'src/scripts/postTweet.js'),
-timeline: path.resolve(__dirname,'src/scripts/timeline.js'),
-mockroblog: path.resolve(__dirname,'src/scripts/mockroblog.js')
+    addremove: path.resolve(__dirname,'src/scripts/addremove.js'),
+    login: path.resolve(__dirname,'src/scripts/login.js'),
+    register: path.resolve(__dirname,'src/scripts/register.js'),
+    postTweet: path.resolve(__dirname,'src/scripts/postTweet.js'),
+    timeline: path.resolve(__dirname,'src/scripts/timeline.js'),
+    mockroblog: path.resolve(__dirname,'src/scripts/mockroblog.js'),
+    tailwind: path.resolve(__dirname,'src/tailwind.css')
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: true,
       template: path.resolve(__dirname, 'src/index.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['login','tailwind'],
     }),
     new HtmlWebpackPlugin({
       filename: 'aboutUs.html',
       inject: true,
       template: path.resolve(__dirname, 'src/aboutUs.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['tailwind'],
     }),
     new HtmlWebpackPlugin({
       filename: 'addremovefollower.html',
       inject: true,
       template: path.resolve(__dirname, 'src/addremovefollower.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['addremove','tailwind'],
     }),
     new HtmlWebpackPlugin({
       filename: 'hometimeline.html',
       inject: true,
       template: path.resolve(__dirname, 'src/hometimeline.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['timeline','tailwind'],
     }),
     new HtmlWebpackPlugin({
       filename: 'password.html',
       inject: true,
       template: path.resolve(__dirname, 'src/password.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['tailwind'],
     }),
     new HtmlWebpackPlugin({
       filename: 'posttweet.html',
       inject: true,
       template: path.resolve(__dirname, 'src/posttweet.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['tailwind','postTweet'],
     }),
     new HtmlWebpackPlugin({
       filename: 'publishtimeline.html',
       inject: true,
       template: path.resolve(__dirname, 'src/publishtimeline.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['tailwind','timeline'],
     }),
     new HtmlWebpackPlugin({
       filename: 'register.html',
       inject: true,
       template: path.resolve(__dirname, 'src/register.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['register','tailwind'],
     }),
     new HtmlWebpackPlugin({
       filename: 'usertimeline.html',
       inject: true,
       template: path.resolve(__dirname, 'src/usertimeline.html'),
-      chunks:['addremove','login','register','postTweet','timeline','mockroblog'],
+      chunks:['tailwind','timeline'],
     })
   ],
   module: {
