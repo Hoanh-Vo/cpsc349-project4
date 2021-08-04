@@ -62,31 +62,48 @@ export function isfollowing (userToCheck, loggedIn) {
   return false
 }
 
-export function authenticateUser (username, password) {
-  if (username === 'ProfAvery' && password === 'password') {
-    return {
-      id: 1,
-      username: 'ProfAvery',
-      email: 'kavery@fullerton.edu',
-      password: 'password'
-    }
-  } else if (username === 'KevinAWortman' && password === 'qwerty') {
-    return {
-      id: 2,
-      username: 'KevinAWortman',
-      email: 'kwortman@fullerton.edu',
-      password: 'qwerty'
-    }
-  } else if (username === 'Beth_CSUF' && password === 'secret') {
-    return {
-      id: 3,
-      username: 'Beth_CSUF',
-      email: 'beth.harnick.shapiro@fullerton.edu',
-      password: 'secret'
-    }
-  }
 
-  return null
+export async function  authenticateUser (username, password) {
+  var data
+  let url = 'http://localhost:5000/users/?username='+username+'&password='+password
+  const output = fetch(url).then(response => response.json())
+  .then(data => console.log(data['resources'][0]));
+  return output
+  // var response = await fetch('http://localhost:5000/users/?username='+username+'&password='+password)
+  // var j =  await response.json().then(j => data = j)
+  // // var h = await j
+  // return data
+
+  // if (data['resources'].length > 0 ){
+  //   return data['resources'][0]
+  // }
+  // else{
+  //   return null
+  // }
+  // if (username === 'ProfAvery' && password === 'password') {
+  //   return {
+  //     id: 1,
+  //     username: 'ProfAvery',
+  //     email: 'kavery@fullerton.edu',
+  //     password: 'password'
+  //   }
+  // } else if (username === 'KevinAWortman' && password === 'qwerty') {
+  //   return {
+  //     id: 2,
+  //     username: 'KevinAWortman',
+  //     email: 'kwortman@fullerton.edu',
+  //     password: 'qwerty'
+  //   }
+  // } else if (username === 'Beth_CSUF' && password === 'secret') {
+  //   return {
+  //     id: 3,
+  //     username: 'Beth_CSUF',
+  //     email: 'beth.harnick.shapiro@fullerton.edu',
+  //     password: 'secret'
+  //   }
+  // }
+
+  // return null
 }
 
 export function addFollower (userId, userIdToFollow) {
