@@ -36,13 +36,36 @@ if (sPage === 'usertimeline.html') {
   const currentPageUser = urlParams.get('username')
   const loggedInUser = window.localStorage.getItem('user_name')
 
+  // if (currentPageUser === loggedInUser || currentPageUser === 'self') {
+  //   document.getElementById('follow_unfollow_button').innerHTML = 'ME'
+  // } else if (mockroblog.isfollowing(currentPageUser, loggedInUser) === true) {
+  //   document.getElementById('follow_unfollow_button').innerHTML = 'UNFOLLOW'
+  // } else {
+  //   document.getElementById('follow_unfollow_button').innerHTML = 'FOLLOW'
+  // }
   if (currentPageUser === loggedInUser || currentPageUser === 'self') {
-    document.getElementById('follow_unfollow_button').innerHTML = 'ME'
-  } else if (mockroblog.isfollowing(currentPageUser, loggedInUser) === true) {
-    document.getElementById('follow_unfollow_button').innerHTML = 'UNFOLLOW'
-  } else {
-    document.getElementById('follow_unfollow_button').innerHTML = 'FOLLOW'
-  }
+      document.getElementById('follow_unfollow_button').innerHTML = 'ME'
+    } else {
+      console.log('test')
+  fetch('http://localhost:5000/users/?username='+loggedInUser)
+  .then(response => response.json())
+  .then(function(username_) {
+    var logged_in_user_id = username_['resources'][0]['id']
+    fetch('http://localhost:5000/users/?username='+currentPageUser)
+    .then(response => response.json())
+    .then(function(username_page_) {
+      var page_user_id= username_page_['resources'][0]['id']
+      fetch('http://localhost:5000/followers/?follower_id='+logged_in_user_id+'&following_id='+page_user_id)  
+      .then(response => response.json())
+    .then(function(compare_return) {
+      let compare_final = compare_return['resources']
+      if (compare_final.length > 0){
+        document.getElementById('follow_unfollow_button').innerHTML = 'UNFOLLOW'
+      } else {
+        document.getElementById('follow_unfollow_button').innerHTML = 'FOLLOW'
+      }
+  })})})}
+
 
   document.getElementById('follow_unfollow_button').addEventListener('click', (e) => {
     const queryString = window.location.search
@@ -52,19 +75,72 @@ if (sPage === 'usertimeline.html') {
 
     if (currentPageUser === loggedInUser || currentPageUser === 'self') {
       window.alert("You Can't Follow/Unfollow yourself")
-    } else if (mockroblog.isfollowing(currentPageUser, loggedInUser) === true) {
-      window.alert('You have Unfollowed  ' + currentPageUser)
-      const loggedinuserID = mockroblog.getUserbyID(loggedInUser).id
-      const usertofollowID = mockroblog.getUserbyID(currentPageUser).id
-      mockroblog.removeFollower(loggedinuserID, usertofollowID)
+    } 
+    else if (document.getElementById('follow_unfollow_button').innerHTML == 'UNFOLLOW'){
+
       document.getElementById('follow_unfollow_button').innerHTML = 'FOLLOW'
-    } else {
-      window.alert('You are now following ' + currentPageUser)
-      const loggedinuserID = mockroblog.getUserbyID(loggedInUser).id
-      const usertofollowID = mockroblog.getUserbyID(currentPageUser).id
-      mockroblog.addFollower(loggedinuserID, usertofollowID)
-      document.getElementById('follow_unfollow_button').innerHTML = 'UNFOLLOW'
+      fetch('http://localhost:5000/users/?username='+loggedInUser)
+      .then(response => response.json())
+      .then(function(username_) {
+        var logged_in_user_id = username_['resources'][0]['id']
+        fetch('http://localhost:5000/users/?username='+currentPageUser)
+        .then(response => response.json())
+        .then(function(username_page_) {
+          var page_user_id= username_page_['resources'][0]['id']
+          fetch('http://localhost:5000/followers/?follower_id='+logged_in_user_id+'&following_id='+page_user_id)
+          .then(response => response.json()).then(function(entryid_) {
+            var entryid=entryid_['resources'][0]['id']
+
+            var requestOptions = {
+              method: 'DELETE',
+              redirect: 'follow'
+            };
+            fetch("http://localhost:5000/followers/"+entryid, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+          })
+
+          })})
+
+ 
     }
+    else if (document.getElementById('follow_unfollow_button').innerHTML == 'FOLLOW'){
+      document.getElementById('follow_unfollow_button').innerHTML = 'UNFOLLOW'
+      fetch('http://localhost:5000/users/?username='+loggedInUser)
+      .then(response => response.json())
+      .then(function(username_) {
+        var logged_in_user_id = username_['resources'][0]['id']
+        fetch('http://localhost:5000/users/?username='+currentPageUser)
+        .then(response => response.json())
+        .then(function(username_page_) {
+          var page_user_id= username_page_['resources'][0]['id']
+          let opts = {
+            "follower_id": logged_in_user_id,
+            "following_id": page_user_id
+          }
+          fetch('http://localhost:5000/followers/', {
+          method: 'post',
+          body: JSON.stringify(opts)
+            }).then(function(response) {
+            alert(response.json())
+            })
+
+          })})
+    }
+    // else if (mockroblog.isfollowing(currentPageUser, loggedInUser) === true) {
+    //   window.alert('You have Unfollowed  ' + currentPageUser)
+    //   const loggedinuserID = mockroblog.getUserbyID(loggedInUser).id
+    //   const usertofollowID = mockroblog.getUserbyID(currentPageUser).id
+    //   mockroblog.removeFollower(loggedinuserID, usertofollowID)
+    //   document.getElementById('follow_unfollow_button').innerHTML = 'FOLLOW'
+    // } else {
+    //   window.alert('You are now following ' + currentPageUser)
+    //   const loggedinuserID = mockroblog.getUserbyID(loggedInUser).id
+    //   const usertofollowID = mockroblog.getUserbyID(currentPageUser).id
+    //   mockroblog.addFollower(loggedinuserID, usertofollowID)
+    //   document.getElementById('follow_unfollow_button').innerHTML = 'UNFOLLOW'
+    // }
   })
 }
 // window.onload = window.alert(window.localStorage.getItem("user_name"));
