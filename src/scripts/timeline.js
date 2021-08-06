@@ -27,6 +27,55 @@ export function getUserbyID (id) {
   return null
 }
 
+function createLike(postID) {
+  const loggedInUser = window.localStorage.getItem('user_name')
+  console.log(loggedInUser)
+  fetch('http://localhost:5000/users/?username='+loggedInUser)
+  .then(response => response.json())
+  .then(function(loggedinusername_) {
+    const userid = loggedinusername_['resources'];
+    console.log(userid)
+    alert(postID);
+    console.log(userid.userid)
+    alert(userid[0].id);
+    let now = new Date()
+    let timestamp =       
+    now.getUTCFullYear() + '-' +
+    String(now.getUTCMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getUTCDate()).padStart(2, '0') + ' ' +
+    String(now.getUTCHours()).padStart(2, '0') + ':' +
+    String(now.getUTCMinutes()).padStart(2, '0') + ':' +
+    String(now.getUTCSeconds()).padStart(2, '0');
+    let opts= {
+
+      "user_id": userid[0].id,
+      "post_id" : postID,
+      "timestamp" : timestamp
+  }
+  console.log('TEST2')
+    fetch('http://localhost:5000/likes/', {
+      method: 'POST',
+      body: JSON.stringify(opts)
+        }).then(function(response_) {
+          if (response_.status == 500){
+                window.alert('Error has Occurred')
+                console.log('TEST3')
+          }else{
+              console.log(response_)
+                window.alert('Like Posted Succesfully')
+          }
+          
+          // window.location.replace('./index.html')
+          // window.localStorage.setItem('user_name', username)
+        })
+  })
+  
+  
+    
+  // alert("HI");
+}
+window.createLike = createLike;
+
 const sPath = window.location.pathname
 const sPage = sPath.substring(sPath.lastIndexOf('/') + 1)
 
@@ -172,8 +221,8 @@ if (sPage === 'publishtimeline.html') {
             '</div>' +
             '<div >' + timeline[i].timestamp + '</div>' +
 
-            '<div>' +
-                '<svg class="h-8 w-8 text-blue-500"  fill="blue" width="18" height="18" viewBox="0 0 24 24" stroke="currentColor">'+
+            '<div class="likeButton" onclick="createLike('+timeline[i].id+')">' +
+                '<svg class="h-8 w-8 text-blue-500"  fill="white" width="18" height="18" viewBox="0 0 24 24" stroke="currentColor">'+
                 '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>'+
                 '</svg>'                    
            +'</div>' 
@@ -182,6 +231,8 @@ if (sPage === 'publishtimeline.html') {
       container.innerHTML += '<br>'
     }) }
   })
+
+
 
   // const timeline = mockroblog.getPublicTimeline()
   // let container
