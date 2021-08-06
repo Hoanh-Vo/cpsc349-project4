@@ -260,6 +260,7 @@ if (sPage === 'publishtimeline.html') {
     console.log(loggedInUser)
   }
   console.log(loggedInUser)
+
   fetch('http://localhost:5000/users/?username='+loggedInUser)
   .then(response => response.json())
   .then(function(username_) {
@@ -267,22 +268,51 @@ if (sPage === 'publishtimeline.html') {
     fetch('http://localhost:5000/posts/?user_id='+username.id)
     .then(response => response.json())
     .then(function(timeline_) {
-      let timeline = timeline_['resources']
-  // const timeline = mockroblog.getUserTimeline(username)
-  // let container
-  const container = document.getElementById('timeline-json')
+      let timeline = timeline_['resources']  //the post 
+      // const timeline = mockroblog.getUserTimeline(username)
+      // let container
+      const container = document.getElementById('timeline-json')
+      //loop through each post 
+      for (let i = 0; i < timeline.length; i++) {
 
-  for (let i = 0; i < timeline.length; i++) {
-    // const username = getUserbyID(timeline[i].user_id)
-    container.innerHTML += "<li class='divD' >" +
-          "<div class=''>" + "<img src='https://i.pravatar.cc/50' width='40' height='40' class='rounded-full'>" +
-              "<div class='div_timeline'>" + "<a href='usertimeline.html?username=" + username.username + "'class='a_timeline'>" + username.username + "</a> <span class='span_timeline2'>" +
-              timeline[i].text + '</span> </div>' +
-          '</div>' +
-          '<div >' + timeline[i].timestamp + '</div>' +
-          '</li>'
-    container.innerHTML += '<br>'
-  }
+        var user_id_timeline_like = "" 
+        fetch('http://localhost:5000/likes/?post_id='+timeline[i].id)
+        .then(response => response.json())
+        .then(function(like_list) {
+          console.log(like_list)  // for testing ================
+          for (let i = 0; i < like_list.length; i++){  //loop through the liked list
+            let user = like_list[i].user_id
+            fetch('http://localhost:5000/users/?id='+user)
+            .then(response => response.json())
+            .then(function(likedname_) {
+              let likedname = likedname_['resources'][0]['username']
+              user_id_timeline_like += likedname+" "
+            })  
+          }//end of loop through like list
+          
+          })
+
+
+        // const username = getUserbyID(timeline[i].user_id)
+        container.innerHTML += "<li>" +
+          "<div class='divD'>" +
+              "<div class=''>" + "<img src='https://i.pravatar.cc/50' width='40' height='40' class='rounded-full'>" +
+                  "<div class='div_timeline'>" + "<a href='usertimeline.html?username=" + username.username + "'class='a_timeline'>" + username.username + "</a> <span class='span_timeline2'>" +
+                  timeline[i].text + '</span> </div>' +
+              '</div>' +
+              '<div >' + timeline[i].timestamp + '</div>' +
+          "</div>"+ 
+
+          '<div class="text-purple-900 tex" >'+ 
+
+            
+              user_id_timeline_like +
+              
+
+          "<div>"+ 
+        '</li>'
+        container.innerHTML += '<br>'
+      }//end of loop through each post 
 
 })})
 } else if (sPage === 'hometimeline.html') {
