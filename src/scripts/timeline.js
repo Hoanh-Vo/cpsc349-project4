@@ -81,8 +81,15 @@ if (sPage === 'usertimeline.html') {
   //   document.getElementById('follow_unfollow_button').innerHTML = 'FOLLOW'
   // }
   if (currentPageUser === loggedInUser || currentPageUser === 'self') {
+    document.getElementById('DMDiv').style.visibility = 'hidden';
+   // document.getElementById('DMForm').style.visibility = 'hidden';
     document.getElementById('follow_unfollow_button').innerHTML = 'ME'
   } else {
+    //document.getElementById("DMForm").classList.add('MyClass');
+    //document.getElementById("DMForm").classList.remove('hidden');
+
+    //document.getElementById('DMForm').style.visibility = 'show';
+
     console.log('test')
     fetch('http://localhost:5000/users/?username=' + loggedInUser)
       .then(response => response.json())
@@ -106,6 +113,59 @@ if (sPage === 'usertimeline.html') {
       })
   }
 
+  document.getElementById('DMButton').addEventListener('click', (e) => {
+    document.getElementById("DMForm").classList.remove('hidden');
+  })
+
+  document.getElementById('sendButton').addEventListener('click', (e) => {
+    const loggedInUser = window.localStorage.getItem('user_name')
+    console.log(loggedInUser)
+    fetch('http://localhost:5000/users/?username=' + currentPageUser)
+    .then(response => response.json())
+    .then(function (currentusername_) {
+      const toUserID = currentusername_['resources'];
+    fetch('http://localhost:5000/users/?username=' + loggedInUser)
+      .then(response => response.json())
+      .then(function (loggedinusername_) {
+        const userid = loggedinusername_['resources'];
+        console.log(userid)
+        //alert(postID);
+        console.log(userid.userid)
+        //alert(userid[0].id);
+        let now = new Date()
+        let timestamp =
+          now.getUTCFullYear() + '-' +
+          String(now.getUTCMonth() + 1).padStart(2, '0') + '-' +
+          String(now.getUTCDate()).padStart(2, '0') + ' ' +
+          String(now.getUTCHours()).padStart(2, '0') + ':' +
+          String(now.getUTCMinutes()).padStart(2, '0') + ':' +
+          String(now.getUTCSeconds()).padStart(2, '0');
+        let opts = {
+  
+          "from_user_id": userid[0].id,
+          "to_user_id": toUserID[0].id,
+          "timestamp": timestamp,
+          "text": document.getElementById('DMText').value
+        }
+        console.log('TEST2')
+        fetch('http://localhost:5000/direct_messages/', {
+          method: 'POST',
+          body: JSON.stringify(opts)
+        }).then(function (response_) {
+          if (response_.status == 500) {
+            //window.alert('Error has Occurred')
+            console.log('TEST3')
+          } else {
+            console.log(response_)
+            window.alert('DM Posted Succesfully')
+          }
+  
+          // window.location.replace('./index.html')
+          // window.localStorage.setItem('user_name', username)
+        })
+      })
+    })
+  })
 
   document.getElementById('follow_unfollow_button').addEventListener('click', (e) => {
     const queryString = window.location.search

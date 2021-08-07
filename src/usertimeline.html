@@ -34,10 +34,33 @@
         
 
         <main class="py-10 h-screen bg-gray-300 px-2">
+            
             <div id="follow_unfollow" class=" max-w-xl md:max-w-xl  mx-auto my-4 form_input_pass text-center " >
                 <button id=follow_unfollow_button>follow/unfollow</button>
                 <br>
             </div>  
+            
+            <div id="DMDiv" class=" max-w-xl md:max-w-xl  mx-auto my-4 form_input_pass text-center " >
+                <button id="DMButton">Direct Message</button>
+                <br>
+                
+            </div>  
+     
+                <div class=" max-w-xl md:max-w-xl  mx-auto my-4">
+
+                    <div class ="hidden" id="DMForm">
+                        <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Direct Message</h2>
+                        <div class="relative mb-4">
+                        <label for="Post tweet title" class="leading-7 text-sm text-gray-600">Send this user a message!</label>
+                        <input type="text" id="DMText" placeholder="..."  class="form_input " required>
+                    </div>
+
+
+                        <input type="submit" value= "Send" id="sendButton" class="form_input_pass"/></br>
+               
+                
+                </div>
+
             <div class="max-w-xl mx-auto bg-gray-100 shadow-lg rounded-lg overflow-auto md:max-w-xl">
                 <div class="md:flex ">
                     <div class="w-full p-4">
