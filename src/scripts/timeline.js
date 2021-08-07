@@ -162,7 +162,7 @@ if (sPage === 'usertimeline.html') {
                 method: 'post',
                 body: JSON.stringify(opts)
               }).then(function (response) {
-                alert(response.json())
+                //alert(response.json())
               })
 
             })
