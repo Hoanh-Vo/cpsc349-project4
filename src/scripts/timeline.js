@@ -3,26 +3,18 @@ import * as mockroblog from './mockroblog.js'
 //Not working, the nested promise does not return 
 export function getUserbyID1(id) {
   let thename;
-  fetch('http://localhost:5000/users/?id='+id)
-  .then(response => response.json())
-  .then(function (users_, thename) {
-    let users = users_['resources'];
-    let username = users_['resources'][0];
-    console.log(users);
-    console.log(users.username);
-    console.log(users[0].username);
-    //this doesn't work either?
-    thename = users[0].username;
-    //does not return and can't be seen from the outside function
-    return users[0].username;
-    
-  }
-  )
+  fetch('http://localhost:5000/users/?id=' + id)
+    .then(response => response.json())
+    .then(function (users_, thename) {
+      let users = users_['resources'];
+      thename = users[0].username;
+    })
   return thename;
 }
 //test stuff
 //alert(getUserbyID1(1) + "");
 console.log(getUserbyID1(1));
+
 function createLike(postID) {
   const loggedInUser = window.localStorage.getItem('user_name')
   console.log(loggedInUser)
@@ -203,53 +195,64 @@ if (sPage === 'usertimeline.html') {
 //  }
 if (sPage === 'publishtimeline.html') {
   fetch('http://localhost:5000/likes/')
-  .then(response => response.json())
-  .then(function (likes_) {
-    let likes = likes_['resources']
-  fetch('http://localhost:5000/posts/')
     .then(response => response.json())
-    .then(function (timeline_) {
-      let timeline = timeline_['resources']
-      const container = document.getElementById('timeline-json')
-      for (let i = 0; i < timeline.length; i++) {
-        fetch('http://localhost:5000/users/?id=' + timeline[i].user_id)
-          .then(response => response.json())
-          .then(function (username_) {
+    .then(function (likes_) {
+      let likes = likes_['resources']
+      fetch('http://localhost:5000/posts/')
+        .then(response => response.json())
+        .then(function (timeline_) {
+          let timeline = timeline_['resources']
+          const container = document.getElementById('timeline-json')
+          for (let i = 0; i < timeline.length; i++) {
+            fetch('http://localhost:5000/users/?id=' + timeline[i].user_id)
+              .then(response => response.json())
+              .then(function (username_) {
 
-            let username = username_['resources'][0]
-            // const username = getUserbyID(timeline[i].user_id)
-            container.innerHTML += "<li class='divD' >" +
-              "<div class=''>" + "<img src='https://i.pravatar.cc/50' width='40' height='40' class='rounded-full'>" +
-              "<div class='div_timeline'>" + "<a href='usertimeline.html?username=" + username.username + "'class='a_timeline'>" + username.username + "</a> <span class='span_timeline2'>" +
-              timeline[i].text + '</span> </div>' +
-              '</div>' +
-              '<div >' + timeline[i].timestamp + '</div>' +
+                let username = username_['resources'][0]
+                // const username = getUserbyID(timeline[i].user_id)
+                container.innerHTML += "<li class='divD' >" +
+                  "<div class=''>" + "<img src='https://i.pravatar.cc/50"+timeline[i].id+"' width='40' height='40' class='rounded-full'>" +
+                  "<div class='div_timeline'>" + "<a href='usertimeline.html?username=" + username.username + "'class='a_timeline'>" + username.username + "</a> <span class='span_timeline2'>" +
+                  timeline[i].text + '</span> </div>' +
+                  '</div>' +
+                  '<div >' + timeline[i].timestamp + '</div>' +
 
-              '<div class="likeButton" onclick="createLike(' + timeline[i].id + ')">' +
-              '<svg class="h-8 w-8 text-blue-500"  fill="white" width="18" height="18" viewBox="0 0 24 24" stroke="currentColor">' +
-              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>' +
-              '</svg>' +
-              '</div>' +
-              '<br>'
-              +
-              '<div>' 
-              +
-              '</div>'
-              +
-              '</li>'
-            container.innerHTML += '<br>'
-            container.innerHTML += '<div>'
-            for (let c = 0; c < likes.length; c++) {
-              let thelikes = [];
-              if(timeline[i].id == likes[c].post_id) {
-                container.innerHTML += 'User who like this: ' + getUserbyID1(likes[c].user_id);
-              }
+                  '<div class="likeButton" onclick="createLike(' + timeline[i].id + ')">' +
+                  '<svg class="h-8 w-8 text-blue-500"  fill="white" width="18" height="18" viewBox="0 0 24 24" stroke="currentColor">' +
+                  '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>' +
+                  '</svg>' +
+                  '</div>' +
+                  '<br>' +
+                  '<div>' +
+                  '</div>' +
+                  '</li>'
+                container.innerHTML += '<br>'
+                container.innerHTML += 'Likes: '
+                container.innerHTML += '<div id = "'+timeline[i].id+' hello">'
+                
+                for (let c = 0; c < likes.length; c++) {
+                  let thename = "";
+                  let thelikes = [];
+                  if (timeline[i].id == likes[c].post_id) {
+                    fetch('http://localhost:5000/users/?id=' + likes[c].user_id)
+                    .then(response => response.json())
+                    .then(function (users_) {
+                      let thediv = document.getElementById(timeline[i].id + " hello");
+                      
+                      let users = users_['resources'];
+                      thename = users[0].username;
+                      thediv.innerHTML += " ";
+                      thediv.innerHTML += "<a href='usertimeline.html?username=" + thename + "'class='a_timeline'>" + thename + "</a>";
+                    })
+                    
+                    
+                  }
+                }
+                container.innerHTML += '</div>'
+              })
           }
-          container.innerHTML += '</div>'
-          })
-      }
+        })
     })
-  })
 
 
 
