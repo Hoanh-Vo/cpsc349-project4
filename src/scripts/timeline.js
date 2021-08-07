@@ -23,9 +23,9 @@ function createLike(postID) {
     .then(function (loggedinusername_) {
       const userid = loggedinusername_['resources'];
       console.log(userid)
-      alert(postID);
+      //alert(postID);
       console.log(userid.userid)
-      alert(userid[0].id);
+      //alert(userid[0].id);
       let now = new Date()
       let timestamp =
         now.getUTCFullYear() + '-' +
@@ -46,7 +46,7 @@ function createLike(postID) {
         body: JSON.stringify(opts)
       }).then(function (response_) {
         if (response_.status == 500) {
-          window.alert('Error has Occurred')
+          //window.alert('Error has Occurred')
           console.log('TEST3')
         } else {
           console.log(response_)
@@ -282,7 +282,10 @@ if (sPage === 'publishtimeline.html') {
     console.log(loggedInUser)
   }
   console.log(loggedInUser)
-
+  fetch('http://localhost:5000/likes/')
+    .then(response => response.json())
+    .then(function (likes_) {
+      let likes = likes_['resources']
   fetch('http://localhost:5000/users/?username=' + loggedInUser)
     .then(response => response.json())
     .then(function (username_) {
@@ -322,24 +325,58 @@ if (sPage === 'publishtimeline.html') {
               "<div class='div_timeline'>" + "<a href='usertimeline.html?username=" + username.username + "'class='a_timeline'>" + username.username + "</a> <span class='span_timeline2'>" +
               timeline[i].text + '</span> </div>' +
               '</div>' +
-              '<div >' + timeline[i].timestamp + '</div>' +
+              
+              '<div >' + timeline[i].timestamp + '</div>'  +
+              '<div class="likeButton" onclick="createLike(' + timeline[i].id + ')">' +
+              '<svg class="h-8 w-8 text-blue-500"  fill="white" width="18" height="18" viewBox="0 0 24 24" stroke="currentColor">' +
+              '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>' +
+              '</svg>'  +
+              '</div>' +
               "</div>" +
 
               '<div class="text-purple-900 tex" >' +
 
 
-              user_id_timeline_like +
+
 
 
               "<div>" +
               '</li>'
             container.innerHTML += '<br>'
+            container.innerHTML += 'Likes: '
+                container.innerHTML += '<div id = "'+timeline[i].id+' hello">'
+                
+                for (let c = 0; c < likes.length; c++) {
+                  let thename = "";
+                  let thelikes = [];
+                  if (timeline[i].id == likes[c].post_id) {
+                    fetch('http://localhost:5000/users/?id=' + likes[c].user_id)
+                    .then(response => response.json())
+                    .then(function (users_) {
+                      let thediv = document.getElementById(timeline[i].id + " hello");
+                      
+                      let users = users_['resources'];
+                      thename = users[0].username;
+                      thediv.innerHTML += " ";
+                      thediv.innerHTML += "<a href='usertimeline.html?username=" + thename + "'class='a_timeline'>" + thename + "</a>";
+                    })
+                    
+                    
+                  }
+                }
+                container.innerHTML += '</div>'
+            
           } //end of loop through each post 
 
         })
     })
+  })
 } else if (sPage === 'hometimeline.html') {
   // let container
+  fetch('http://localhost:5000/likes/')
+  .then(response => response.json())
+  .then(function (likes_) {
+    let likes = likes_['resources']
   fetch('http://localhost:5000/posts/')
     .then(response => response.json())
     .then(function (timeline_) {
@@ -371,15 +408,37 @@ if (sPage === 'publishtimeline.html') {
                           '</div>' +
                           '<div >' + timeline[i].timestamp + '</div>' +
 
-
-                          '<div>' +
-                          '<svg class="h-8 w-8 text-blue-500"  fill="blue" width="18" height="18" viewBox="0 0 24 24" stroke="currentColor">' +
+                          '<div class="likeButton" onclick="createLike(' + timeline[i].id + ')">' +
+                          '<svg class="h-8 w-8 text-blue-500"  fill="white" width="18" height="18" viewBox="0 0 24 24" stroke="currentColor">' +
                           '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>' +
-                          '</svg>' +
+                          '</svg>'  +
                           '</div>' +
 
                           '</li>'
                         container.innerHTML += '<br>'
+                        container.innerHTML += '<br>'
+                        container.innerHTML += 'Likes: '
+                            container.innerHTML += '<div id = "'+timeline[i].id+' hello">'
+                            
+                            for (let c = 0; c < likes.length; c++) {
+                              let thename = "";
+                              let thelikes = [];
+                              if (timeline[i].id == likes[c].post_id) {
+                                fetch('http://localhost:5000/users/?id=' + likes[c].user_id)
+                                .then(response => response.json())
+                                .then(function (users_) {
+                                  let thediv = document.getElementById(timeline[i].id + " hello");
+                                  
+                                  let users = users_['resources'];
+                                  thename = users[0].username;
+                                  thediv.innerHTML += " ";
+                                  thediv.innerHTML += "<a href='usertimeline.html?username=" + thename + "'class='a_timeline'>" + thename + "</a>";
+                                })
+                                
+                                
+                              }
+                            }
+                            container.innerHTML += '</div>'
                       })
                   }
                 }
@@ -387,5 +446,5 @@ if (sPage === 'publishtimeline.html') {
             })
         })
     })
-
+  })
 }
